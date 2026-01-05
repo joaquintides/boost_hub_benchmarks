@@ -59,6 +59,7 @@ void resume_timing()
 #include <iostream>
 #include <iomanip>
 #include <plf_hive.h>
+#include <stdexcept>
 #include <string>
 #include <vector>
 
@@ -103,6 +104,18 @@ struct urbg
   boost::detail::splitmix64 rng;
 };
 
+template<typename Container, typename Iterator>
+void erase_void(Container& x, Iterator it)
+{
+  x.erase(it);
+}
+
+template<typename... Args, typename Iterator>
+void erase_void(boost::hub<Args...>& x, Iterator it)
+{
+  x.erase_void(it);
+}
+
 template<typename Container>
 Container make(std::size_t n, double erasure_rate)
 {
@@ -120,7 +133,7 @@ Container make(std::size_t n, double erasure_rate)
   for(std::size_t i = 0; i < m; ++i) iterators.push_back(c.insert((int)rng()));
   std::shuffle(iterators.begin(), iterators.end(), rng);
   for(auto it: iterators) {
-    if(rng() < erasure_cut) c.erase(it);
+    if(rng() < erasure_cut) erase_void(c, it);
   }
   for(std::size_t i = 0; i < reinsertion_count; ++i) c.insert((int)rng());
   return c;
@@ -234,19 +247,24 @@ struct visit_all: prepare<Container>
 
 int main()
 {
-  using hive = plf::hive<element>;
-  using hub = boost::hub<element>;
+  try{
+    using hive = plf::hive<element>;
+    using hub = boost::hub<element>;
 
-  benchmark(
-    "insert, erase, insert", 
-    create<hive>{}, create<hub>{});
-  benchmark(
-    "insert, erase, insert, destroy", 
-    create_and_destroy<hive>{}, create_and_destroy<hub>{});
-  benchmark(
-    "for_each", 
-    for_each<hive>{}, for_each<hub>{});
-  benchmark(
-    "visit_all", 
-    for_each<hive>{}, visit_all<hub>{});
+    benchmark(
+      "insert, erase, insert", 
+      create<hive>{}, create<hub>{});
+    benchmark(
+      "insert, erase, insert, destroy", 
+      create_and_destroy<hive>{}, create_and_destroy<hub>{});
+    benchmark(
+      "for_each", 
+      for_each<hive>{}, for_each<hub>{});
+    benchmark(
+      "visit_all", 
+      for_each<hive>{}, visit_all<hub>{});
+  }
+  catch(const std::exception& e) {
+    std::cerr << e.what() << std::endl;
+  }
 }
