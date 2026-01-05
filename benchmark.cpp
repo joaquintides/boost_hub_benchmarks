@@ -210,6 +210,8 @@ struct prepare
       pause_timing();
       n = n_;
       erasure_rate = erasure_rate_;
+      c.clear();
+      c.shrink_to_fit();
       c = make<Container>(n, erasure_rate);
       resume_timing();
     }
