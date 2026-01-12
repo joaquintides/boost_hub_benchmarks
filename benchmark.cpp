@@ -86,6 +86,7 @@ struct element
   operator int() const { return n; }
 
   int n;
+  std::string str = std::to_string(n);
   char payload[ELEMENT_SIZE - sizeof(int)];
 };
 
