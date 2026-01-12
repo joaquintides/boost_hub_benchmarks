@@ -110,13 +110,11 @@ void erase_void(Container& x, Iterator it)
   x.erase(it);
 }
 
-#if 0
 template<typename... Args, typename Iterator>
 void erase_void(boost::hub<Args...>& x, Iterator it)
 {
   x.erase_void(it);
 }
-#endif
 
 template<typename Container>
 Container make(std::size_t n, double erasure_rate)
