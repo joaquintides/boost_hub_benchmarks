@@ -149,8 +149,8 @@ void benchmark(const char* title, FHive fhive, FHub fhub)
   std::cout << std::string(41, '-') << "\n"
             << title << "\n"
             << "sizeof(element): " << sizeof(element) << "\n";
-#if defined(BOOST_HUB_ENABLE_BIDIRECTIONAL_AVAILABLE_LIST)
-  std::cout << "uses bidirectional available list\n";
+#if defined(BOOST_HUB_ENABLE_FORWARD_AVAILABLE_LIST)
+  std::cout << "uses forward available list\n";
 #endif
   std::cout << std::left << std::setw(11) << "" << "container size\n" << std::right
             << std::left << std::setw(11) << "erase rate" << std::right;
@@ -214,7 +214,7 @@ struct prepare
       n = n_;
       erasure_rate = erasure_rate_;
       c.clear();
-      //c.shrink_to_fit();
+      c.shrink_to_fit();
       c = make<Container>(n, erasure_rate);
       resume_timing();
     }
