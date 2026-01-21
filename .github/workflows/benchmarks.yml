@@ -19,7 +19,7 @@ jobs:
             sourcefile: benchmark.cpp
             compileroptions: -std=c++23 -O3 -DNDEBUG
             outputfile: benchmark
-            os: ubuntu-latest
+            os: [self-hosted, linux, x64]
             container: ubuntu:25.04
             install: g++-15-multilib
             command: ./benchmark
@@ -31,7 +31,7 @@ jobs:
             compileroptions: -std=c++23 -O3 -DNDEBUG
             outputfile: benchmark
             container: ubuntu:25.04
-            os: ubuntu-latest
+            os: [self-hosted, linux, x64]
             install: clang-20
             command: ./benchmark
 
@@ -41,7 +41,7 @@ jobs:
             sourcefile: benchmark.cpp
             compileroptions: -std=c++20 -O3 -DNDEBUG
             outputfile: benchmark
-            os: macos-15
+            os: [self-hosted, macOS, ARM64]
             command: ./benchmark
 
           - name: gcc-x86
@@ -50,7 +50,7 @@ jobs:
             sourcefile: benchmark.cpp
             compileroptions: -std=c++23 -O3 -DNDEBUG
             outputfile: benchmark
-            os: ubuntu-latest
+            os: [self-hosted, linux, x64]
             container: ubuntu:25.04
             install: g++-15-multilib
             command: ./benchmark
@@ -62,7 +62,7 @@ jobs:
             compileroptions: -std=c++23 -O3 -DNDEBUG
             outputfile: benchmark
             container: ubuntu:25.04
-            os: ubuntu-latest
+            os: [self-hosted, linux, x64]
             install: clang-20 g++-multilib libc6-dev-i386 libstdc++-13-dev:i386
             command: ./benchmark
                         
@@ -136,7 +136,7 @@ jobs:
             compileroptions: /std:c++20 /O2 /GL /D "NDEBUG" /EHsc /MD /Fe:benchmark.exe /arch:AVX2
             outputfile: benchmark.exe            
             reportdir: vs-x64
-            os: windows-2022
+            os: [self-hosted, Windows, X64]
             command: benchmark
 
           - name: vs-x86
@@ -146,7 +146,7 @@ jobs:
             compileroptions: /std:c++20 /O2 /GL /D "NDEBUG" /EHsc /MD /Fe:benchmark.exe /arch:AVX2
             outputfile: benchmark.exe            
             reportdir: vs-x86
-            os: windows-2022
+            os: [self-hosted, Windows, X64]
             command: benchmark
 
     runs-on: ${{matrix.os}}
