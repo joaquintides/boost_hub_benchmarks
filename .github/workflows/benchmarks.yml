@@ -14,13 +14,13 @@ jobs:
       matrix:
         include:
           - name: gcc-x64
-            compiler: g++-15
+            compiler: g++-14
             architecture: -m64
             sourcefile: benchmark.cpp
             compileroptions: -std=c++23 -O3 -DNDEBUG
             outputfile: benchmark
             os: [self-hosted, linux, x64]
-            install: g++-15
+            install: g++-14
             command: ./benchmark
 
 #          - name: clang-x64
@@ -43,13 +43,13 @@ jobs:
             command: ./benchmark
 
           - name: gcc-x86
-            compiler: g++-15
+            compiler: g++-14
             architecture: -m32
             sourcefile: benchmark.cpp
             compileroptions: -std=c++23 -O3 -DNDEBUG
             outputfile: benchmark
             os: [self-hosted, linux, x64]
-            install: g++-15
+            install: g++-14
             command: ./benchmark
 
 #          - name: clang-x86
