@@ -20,7 +20,6 @@ jobs:
             compileroptions: -std=c++23 -O3 -DNDEBUG
             outputfile: benchmark
             os: [self-hosted, linux, x64]
-            container: ubuntu:25.04
             install: g++-15-multilib
             command: ./benchmark
 
@@ -30,7 +29,6 @@ jobs:
             sourcefile: benchmark.cpp
             compileroptions: -std=c++23 -O3 -DNDEBUG
             outputfile: benchmark
-            container: ubuntu:25.04
             os: [self-hosted, linux, x64]
             install: clang-20
             command: ./benchmark
@@ -51,7 +49,6 @@ jobs:
             compileroptions: -std=c++23 -O3 -DNDEBUG
             outputfile: benchmark
             os: [self-hosted, linux, x64]
-            container: ubuntu:25.04
             install: g++-15-multilib
             command: ./benchmark
 
@@ -61,7 +58,6 @@ jobs:
             sourcefile: benchmark.cpp
             compileroptions: -std=c++23 -O3 -DNDEBUG
             outputfile: benchmark
-            container: ubuntu:25.04
             os: [self-hosted, linux, x64]
             install: clang-20 g++-multilib libc6-dev-i386 libstdc++-13-dev:i386
             command: ./benchmark
@@ -178,7 +174,7 @@ jobs:
         run: |
           setlocal EnableExtensions EnableDelayedExpansion
           cd %GITHUB_WORKSPACE%
-          call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" ${{matrix.architecture}}
+          call "C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\VC\Auxiliary\Build\vcvarsall.bat" ${{matrix.architecture}}
           set INCLUDE=%INCLUDE%;%GITHUB_WORKSPACE%\hub-root\include;%GITHUB_WORKSPACE%\hive-root;%GITHUB_WORKSPACE%\boost-root
           echo %INCLUDE%
           for %%S in (16 32 64 80) do (
