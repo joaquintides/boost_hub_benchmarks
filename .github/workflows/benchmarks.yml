@@ -23,15 +23,15 @@ jobs:
             install: g++-15
             command: ./benchmark
 
-          - name: clang-x64
-            compiler: clang++-20
-            architecture: -m64
-            sourcefile: benchmark.cpp
-            compileroptions: -std=c++23 -O3 -DNDEBUG
-            outputfile: benchmark
-            os: [self-hosted, linux, x64]
-            install: clang-20
-            command: ./benchmark
+#          - name: clang-x64
+#            compiler: clang++-20
+#            architecture: -m64
+#            sourcefile: benchmark.cpp
+#            compileroptions: -std=c++23 -O3 -DNDEBUG
+#            outputfile: benchmark
+#            os: [self-hosted, linux, x64]
+#            install: clang-20
+#            command: ./benchmark
 
           - name: clang-arm64
             compiler: clang++
@@ -52,15 +52,15 @@ jobs:
             install: g++-15
             command: ./benchmark
 
-          - name: clang-x86
-            compiler: clang++-20
-            architecture: -m32
-            sourcefile: benchmark.cpp
-            compileroptions: -std=c++23 -O3 -DNDEBUG
-            outputfile: benchmark
-            os: [self-hosted, linux, x64]
-            install: clang-20 g++-multilib libc6-dev-i386 libstdc++-13-dev:i386
-            command: ./benchmark
+#          - name: clang-x86
+#            compiler: clang++-20
+#            architecture: -m32
+#            sourcefile: benchmark.cpp
+#            compileroptions: -std=c++23 -O3 -DNDEBUG
+#            outputfile: benchmark
+#            os: [self-hosted, linux, x64]
+#            install: clang-20 g++-multilib libc6-dev-i386 libstdc++-13-dev:i386
+#            command: ./benchmark
                         
     runs-on: ${{matrix.os}}
 
@@ -135,15 +135,15 @@ jobs:
             os: [self-hosted, Windows, X64]
             command: benchmark
 
-          - name: vs-x86
-            compiler: cl
-            architecture: x86
-            sourcefile: benchmark.cpp
-            compileroptions: /std:c++20 /O2 /GL /D "NDEBUG" /EHsc /MD /Fe:benchmark.exe /arch:AVX2
-            outputfile: benchmark.exe            
-            reportdir: vs-x86
-            os: [self-hosted, Windows, X64]
-            command: benchmark
+ #         - name: vs-x86
+ #           compiler: cl
+ #           architecture: x86
+ #           sourcefile: benchmark.cpp
+ #           compileroptions: /std:c++20 /O2 /GL /D "NDEBUG" /EHsc /MD /Fe:benchmark.exe /arch:AVX2
+ #           outputfile: benchmark.exe            
+ #           reportdir: vs-x86
+ #           os: [self-hosted, Windows, X64]
+ #           command: benchmark
 
     runs-on: ${{matrix.os}}
 
