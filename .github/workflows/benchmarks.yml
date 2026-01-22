@@ -21,7 +21,7 @@ jobs:
             outputfile: benchmark
             os: [self-hosted, linux, x64]
             install: g++-14
-            command: sudo cgexec -g memory,cpu:shield sudo -u gha ./benchmark
+            command: sudo systemd-run --scope --uid=gha -p AllowedCPUs=2 ./benchmark
 
           - name: clang-x64
             compiler: clang++-20
@@ -31,7 +31,7 @@ jobs:
             outputfile: benchmark
             os: [self-hosted, linux, x64]
             install: clang-20
-            command: sudo cgexec -g memory,cpu:shield sudo -u gha ./benchmark
+            command: sudo systemd-run --scope --uid=gha -p AllowedCPUs=2 ./benchmark
 
           - name: clang-arm64
             compiler: clang++
@@ -50,7 +50,7 @@ jobs:
             outputfile: benchmark
             os: [self-hosted, linux, x64]
             install: g++-14
-            command: sudo cgexec -g memory,cpu:shield sudo -u gha ./benchmark
+            command: sudo systemd-run --scope --uid=gha -p AllowedCPUs=2 ./benchmark
 
           - name: clang-x86
             compiler: clang++-20
@@ -60,7 +60,7 @@ jobs:
             outputfile: benchmark
             os: [self-hosted, linux, x64]
             install: clang-20 g++-multilib libc6-dev-i386 libstdc++-13-dev:i386
-            command: sudo cgexec -g memory,cpu:shield sudo -u gha ./benchmark
+            command: sudo systemd-run --scope --uid=gha -p AllowedCPUs=2 ./benchmark
                         
     runs-on: ${{matrix.os}}
 
