@@ -68,6 +68,11 @@ struct element
   element(int n_): n{n_} {}
 
 #if defined(NONTRIVIAL_ELEMENT)
+  ~element()
+  {
+    std::memset(payload, 0, sizeof(payload));
+  }
+
   element(element&& x): n{x.n}
   {
     std::memcpy(payload, x.payload, sizeof(payload));
