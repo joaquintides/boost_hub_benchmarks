@@ -116,7 +116,7 @@ jobs:
           for ELEMENT_SIZE in 16 32 64 80; do
             ${{matrix.compiler}} $GITHUB_WORKSPACE/${{matrix.sourcefile}} ${{matrix.architecture}} ${{matrix.compileroptions}} -o ${{matrix.outputfile}} \
               -I$GITHUB_WORKSPACE/hub-root/include -I$GITHUB_WORKSPACE/hive-root -I$GITHUB_WORKSPACE/boost-root \
-              -DELEMENT_SIZE=${ELEMENT_SIZE} -DNONTRIVIAL_ELEMENT -DBOOST_HUB_ENABLE_CONTIGUOUS_BLOCK
+              -DELEMENT_SIZE=${ELEMENT_SIZE} -DNONTRIVIAL_ELEMENT
             ${{matrix.command}}
           done
 
@@ -179,7 +179,7 @@ jobs:
           echo %INCLUDE%
           for %%S in (16 32 64 80) do (
             set "DEFINES=/DELEMENT_SIZE=%%S /DNONTRIVIAL_ELEMENT"
-            ${{matrix.compiler}} %GITHUB_WORKSPACE%\${{matrix.sourcefile}} ${{matrix.compileroptions}} !DEFINES! /DBOOST_HUB_ENABLE_CONTIGUOUS_BLOCK
+            ${{matrix.compiler}} %GITHUB_WORKSPACE%\${{matrix.sourcefile}} ${{matrix.compileroptions}} !DEFINES!
             if errorlevel 1 exit /b 1
             ${{matrix.command}}
           )
