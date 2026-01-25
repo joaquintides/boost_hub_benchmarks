@@ -105,6 +105,8 @@ jobs:
         run: |
           cd $GITHUB_WORKSPACE
           git clone -b feature/forward-available-list https://github.com/joaquintides/hub.git hub-root
+          cd hub-root
+          git checkout 731fc7b0ff7d4ef2cfd13d47e7940503d22051c3
       - name: Install plf_hive
         run: |
           cd $GITHUB_WORKSPACE
@@ -168,6 +170,8 @@ jobs:
         run: |
           cd %GITHUB_WORKSPACE%
           git clone -b feature/forward-available-list https://github.com/joaquintides/hub.git hub-root
+          cd hub-root
+          git checkout 731fc7b0ff7d4ef2cfd13d47e7940503d22051c3
       - name: Install plf_hive
         shell: cmd
         run: |
