@@ -124,24 +124,30 @@ void erase_void(boost::hub<Args...>& x, Iterator it)
 template<typename Container>
 Container make(std::size_t n, double erasure_rate)
 {
-  std::size_t   m = (std::size_t)((double)n / (1.0 - erasure_rate));
   std::uint64_t erasure_cut = 
     (std::uint64_t)(erasure_rate * (double)(std::uint64_t)(-1));
-  std::size_t   reinsertion_count =
-    (std::size_t)(erasure_rate * 0.5 * (double)n);
 
   Container                                 c;
   urbg                                      rng;
   std::vector<typename Container::iterator> iterators;
 
-  iterators.reserve(m);
-  for(std::size_t i = 0; i < m; ++i) iterators.push_back(c.insert((int)rng()));
+  iterators.reserve(n);
+  for(std::size_t i = 0; i < n; ++i) iterators.push_back(c.insert((int)rng()));
   std::shuffle(iterators.begin(), iterators.end(), rng);
   for(auto it: iterators) {
     if(rng() < erasure_cut) erase_void(c, it);
   }
-  for(std::size_t i = 0; i < reinsertion_count; ++i) c.insert((int)rng());
   return c;
+}
+
+template<typename Container>
+void fill(Container& c, std::size_t n)
+{
+  urbg rng;
+  if(n > c.size()) {
+    n -= c.size();
+    while(n--) c.insert((int)rng());
+  }
 }
 
 template<typename FHive, typename FHub>
@@ -168,7 +174,7 @@ void benchmark(const char* title, FHive fhive, FHub fhub)
     std::cout << std::left << std::setw(11) << erasure_rate << std::right << std::flush;
     for(std::size_t i = 3; i <= 7; ++i) {
       std::size_t n = (std::size_t)std::pow(10.0, (double)i);
-      if((double)n * (double)sizeof(element) / (1.0 - erasure_rate) > (double)size_limit) {
+      if(n * sizeof(element) > size_limit) {
         std::cout << "---- " << std::flush;
         continue;
       }
@@ -191,6 +197,7 @@ struct create
     unsigned int res = 0;
     {
       auto c = make<Container>(n, erasure_rate);
+      fill(c, n);
       res = c.size();
       pause_timing();
     }
@@ -205,6 +212,7 @@ struct create_and_destroy
   unsigned int operator()(std::size_t n, double erasure_rate) const
   {
     auto c = make<Container>(n, erasure_rate);
+    fill(c, n);
     return c.size();
   }
 };
